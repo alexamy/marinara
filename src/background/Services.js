@@ -158,7 +158,7 @@ class OptionsService extends Service
 {
   async showPage(optionPage) {
     let manifest = chrome.runtime.getManifest();
-    let url = chrome.extension.getURL(manifest.options_page + '#/' + optionPage);
+    let url = chrome.runtime.getURL(manifest.options_page + '#/' + optionPage);
     let page = await SingletonPage.show(url, PageHost.Tab);
     page.focus();
   }

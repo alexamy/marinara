@@ -250,7 +250,7 @@ class CountdownObserver
     }
 
     let page = null;
-    let url = chrome.extension.getURL('modules/countdown.html');
+    let url = chrome.runtime.getURL('modules/countdown.html');
 
     if (host === 'tab') {
       page = await SingletonPage.show(url, PageHost.Tab);
