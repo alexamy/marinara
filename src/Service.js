@@ -140,6 +140,8 @@ class Service
   }
 
   emit(eventName, ...args) {
+    console.log('emit', this.serviceName, eventName, ...args);
+
     chrome.runtime.sendMessage({
       serviceName: this.serviceName,
       eventName,
