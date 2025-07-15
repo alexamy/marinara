@@ -146,6 +146,9 @@ class Service
       serviceName: this.serviceName,
       eventName,
       args
+    }).catch(() => {
+      // Uncaught (in promise) Error: Could not establish connection. Receiving end does not exist.
+      // Do not know what to do with it expect ignoring.
     });
   }
 
