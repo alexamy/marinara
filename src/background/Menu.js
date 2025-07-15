@@ -2,7 +2,7 @@ import M from '../Messages';
 import { OptionsClient } from './Services';
 
 function makeRandomId() {
-  return Math.random().toString(16).substr(2);
+  return Math.random().toString(16).substring(2);
 }
 
 class Menu
