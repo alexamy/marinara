@@ -3,8 +3,8 @@
   "short_name": "__MSG_app_name_short__",
   "description": "__MSG_app_desc__",
   "default_locale": "en",
-  "version": "34",
-  "manifest_version": 2,
+  "version": "35",
+  "manifest_version": 3,
   "author": "Chris Schmich <schmch@gmail.com>",
   "homepage_url": "https://github.com/schmich/marinara",
   "offline_enabled": true,
@@ -14,17 +14,13 @@
     "storage",
     "notifications"
   ],
-  "browser_action": {
+  "action": {
     "default_title": "Marinara",
     "default_icon": "images/browser-action.png"
   },
   "background": {
-    "persistent": true,
-    "scripts": [
-      "modules/chunk-common.js",
-      "modules/chunk-vendors.js",
-      "modules/background.js"
-    ]
+    "type": "module",
+    "service_worker": "modules/background.js"
   },
   "options_page": "modules/options.html",
   "icons": {
@@ -33,5 +29,7 @@
     "128": "images/128.png"
   },
   "minimum_chrome_version": "55",
-  "content_security_policy": "script-src 'self'; object-src 'self'"
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
 }
