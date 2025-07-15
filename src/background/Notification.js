@@ -24,13 +24,13 @@ class Notification
       type: 'basic',
       title: this.title,
       message: this.message,
-      iconUrl: 'images/128.png',
+      iconUrl: chrome.runtime.getURL('images/128.png'),
       isClickable: !!this.action,
       requireInteraction: true,
       buttons: this.buttons.map(b => {
         return {
           title: b.title,
-          iconUrl: 'images/start.png'
+          iconUrl: chrome.runtime.getURL('images/start.png')
         };
       })
     };

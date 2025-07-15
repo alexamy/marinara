@@ -8,6 +8,7 @@ import { HistoryService, SoundsService, SettingsService, PomodoroService, Option
 import { BadgeObserver, TimerSoundObserver, ExpirationSoundObserver, NotificationObserver, HistoryObserver, CountdownObserver, MenuObserver } from './Observers';
 import { ServiceBroker } from '../Service';
 import * as Alarms from './Alarms';
+import { SingletonPage, PageHost } from './SingletonPage';
 
 async function run() {
   chrome.runtime.onUpdateAvailable.addListener(() => {
