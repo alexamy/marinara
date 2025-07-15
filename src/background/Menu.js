@@ -324,7 +324,7 @@ function createPomodoroMenu(timer) {
   let startLongBreak = new StartLongBreakAction(timer);
   let viewHistory = new PomodoroHistoryAction();
 
-  let inactive = new Menu(['browser_action'],
+  let inactive = new Menu(['action'],
     new MenuGroup(
       startCycle,
       startFocus,
@@ -336,7 +336,7 @@ function createPomodoroMenu(timer) {
     )
   );
 
-  let active = new Menu(['browser_action'],
+  let active = new Menu(['action'],
     new MenuGroup(
       pause,
       resume,
