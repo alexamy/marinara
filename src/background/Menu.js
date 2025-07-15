@@ -1,6 +1,10 @@
 import M from '../Messages';
 import { OptionsClient } from './Services';
 
+function makeRandomId() {
+  return Math.random().toString(16).substr(2);
+}
+
 class Menu
 {
   constructor(contexts, ...groups) {
@@ -24,7 +28,7 @@ class Menu
         }
 
         if (firstItem && !firstGroup) {
-          chrome.contextMenus.create({ type: 'separator', contexts: this.contexts });
+          chrome.contextMenus.create({ id: makeRandomId(), type: 'separator', contexts: this.contexts });
         }
 
         firstGroup = false;
@@ -32,6 +36,7 @@ class Menu
 
         if (item instanceof ParentMenu) {
           let id = chrome.contextMenus.create({
+            id: makeRandomId(),
             title: item.title,
             contexts: this.contexts
           });
@@ -41,18 +46,30 @@ class Menu
               continue;
             }
 
+            const childId = makeRandomId();
             chrome.contextMenus.create({
+              id: childId,
               title: child.title,
               contexts: this.contexts,
-              onclick: () => child.run(),
               parentId: id
+            });
+            chrome.contextMenus.onClicked.addListener((info) => {
+              if(info.menuItemId === childId) {
+                child.run()
+              }
             });
           }
         } else {
+          const itemId = makeRandomId()
           chrome.contextMenus.create({
+            id: itemId,
             title: item.title,
             contexts: this.contexts,
-            onclick: () => item.run()
+          });
+          chrome.contextMenus.onClicked.addListener((info) => {
+            if(info.menuItemId === itemId) {
+              item.run()
+            }
           });
         }
       }
