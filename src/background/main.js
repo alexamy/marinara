@@ -35,7 +35,7 @@ async function run() {
   settingsManager.on('change', () => menu.apply());
 
   Alarms.install(timer, settingsManager);
-  chrome.browserAction.onClicked.addListener(() => {
+  chrome.action.onClicked.addListener(() => {
     if (timer.isRunning) {
       timer.pause();
     } else if (timer.isPaused) {
