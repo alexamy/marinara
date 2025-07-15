@@ -12,7 +12,8 @@
     "alarms",
     "contextMenus",
     "storage",
-    "notifications"
+    "notifications",
+    "offscreen"
   ],
   "action": {
     "default_title": "Marinara",
