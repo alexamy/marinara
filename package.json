@@ -7,6 +7,9 @@
     "build": "vue-cli-service build --mode production --no-unsafe-inline --dest package/modules",
     "test:unit": "vue-cli-service test:unit"
   },
+  "engines": {
+    "node": ">=16.0.0 <=16.20.2"
+  },
   "dependencies": {
     "d3": "^5.0.0",
     "events": "^3.0.0",
