@@ -17,6 +17,11 @@ function canonical(url) {
 class SingletonPage
 {
   static async show(url, host, properties = {}) {
+    // Just open the new tab and that's all. Don't care about single instance.
+    // In v3, `chrome.extension.getViews()` is not accessible from service worker.
+    let tab = await Chrome.tabs.create({ url, active: false, ...properties });
+    return new SingletonPage(tab.id);
+
     // Search existing extension pages to see if page is already open.
     let targetUrl = new URL(url);
     let targetCanonical = canonical(targetUrl);
