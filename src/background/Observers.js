@@ -49,14 +49,14 @@ class BadgeObserver
     }
 
     let color = phase === Phase.Focus ? '#bb0000' : '#11aa11';
-    chrome.browserAction.setTitle({ title: tooltip });
-    chrome.browserAction.setBadgeText({ text });
-    chrome.browserAction.setBadgeBackgroundColor({ color });
+    chrome.action.setTitle({ title: tooltip });
+    chrome.action.setBadgeText({ text });
+    chrome.action.setBadgeBackgroundColor({ color });
   }
 
   removeBadge() {
-    chrome.browserAction.setTitle({ title: '' });
-    chrome.browserAction.setBadgeText({ text: '' });
+    chrome.action.setTitle({ title: '' });
+    chrome.action.setBadgeText({ text: '' });
   }
 }
 
