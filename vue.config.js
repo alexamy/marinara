@@ -28,7 +28,10 @@ module.exports = {
       // since we don't build them, but we still refer to them (see manifest.json).
       new WebpackTouch({ filename: 'package/modules/chunk-vendors.js' }),
       new WebpackTouch({ filename: 'package/modules/chunk-common.js' })
-    ]
+    ],
+    optimization: {
+      minimize: false,
+    }
   },
   // Leave CSS embedded in JS modules instead of
   // extracting it into dedicated .css files.
