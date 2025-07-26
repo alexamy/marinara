@@ -49,14 +49,14 @@ class BadgeObserver
     }
 
     let color = phase === Phase.Focus ? '#bb0000' : '#11aa11';
-    chrome.browserAction.setTitle({ title: tooltip });
-    chrome.browserAction.setBadgeText({ text });
-    chrome.browserAction.setBadgeBackgroundColor({ color });
+    chrome.action.setTitle({ title: tooltip });
+    chrome.action.setBadgeText({ text });
+    chrome.action.setBadgeBackgroundColor({ color });
   }
 
   removeBadge() {
-    chrome.browserAction.setTitle({ title: '' });
-    chrome.browserAction.setBadgeText({ text: '' });
+    chrome.action.setTitle({ title: '' });
+    chrome.action.setBadgeText({ text: '' });
   }
 }
 
@@ -74,7 +74,11 @@ class TimerSoundObserver
       // Cleanup any existing timer sound.
       this.timerSound && await this.timerSound.close();
 
+      this.timerSound = null;
+      return; // TODO we need offscreen for this, wont implement now
+
       if (phase === Phase.Focus && timerSoundSettings) {
+
         this.timerSound = await createTimerSound(timerSoundSettings);
         this.timerSound.start();
       } else {
@@ -250,7 +254,7 @@ class CountdownObserver
     }
 
     let page = null;
-    let url = chrome.extension.getURL('modules/countdown.html');
+    let url = chrome.runtime.getURL('modules/countdown.html');
 
     if (host === 'tab') {
       page = await SingletonPage.show(url, PageHost.Tab);
@@ -304,6 +308,8 @@ class MenuObserver
     this.menu.apply();
   }
 
+  onPing() {}
+
   onExpire() {
     this.menu.apply();
   }
@@ -329,6 +335,10 @@ class TraceObserver
 
   onTick(...args) {
     console.log('tick', ...args);
+  }
+
+  onPing(...args) {
+    console.log('ping', ...args);
   }
 
   onExpire(...args) {

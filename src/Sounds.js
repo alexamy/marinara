@@ -61,6 +61,8 @@ function createTimerSounds() {
 }
 
 async function play(filename) {
+  return; // TODO we need offscreen for this, wont implement now
+
   if (!filename) {
     return;
   }

@@ -7,6 +7,9 @@
     "build": "vue-cli-service build --mode production --no-unsafe-inline --dest package/modules",
     "test:unit": "vue-cli-service test:unit"
   },
+  "engines": {
+    "node": ">=16.0.0 <=16.20.2"
+  },
   "dependencies": {
     "d3": "^5.0.0",
     "events": "^3.0.0",
@@ -21,8 +24,9 @@
     "@vue/cli-service": "^4.5.3",
     "@vue/test-utils": "^1.0.3",
     "chai": "^4.2.0",
+    "chokidar": "^4.0.3",
     "filemanager-webpack-plugin": "^2.0.5",
-    "node-sass": "^7.0.0",
+    "sass": "^1.89.2",
     "sass-loader": "^9.0.3",
     "vue-template-compiler": "^2.6.11",
     "webpack-touch": "^1.0.3"

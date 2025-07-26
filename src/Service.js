@@ -140,10 +140,15 @@ class Service
   }
 
   emit(eventName, ...args) {
+    console.log('emit', this.serviceName, eventName, ...args);
+
     chrome.runtime.sendMessage({
       serviceName: this.serviceName,
       eventName,
       args
+    }).catch(() => {
+      // Uncaught (in promise) Error: Could not establish connection. Receiving end does not exist.
+      // Do not know what to do with it expect ignoring.
     });
   }
 

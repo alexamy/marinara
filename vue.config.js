@@ -23,12 +23,12 @@ module.exports = {
           // Delete background.html after build since it is not used.
           delete: ['package/modules/background.html']
         }
-      }),
-      // Touch chunks after build to ensure they exist. This is necessary in development
-      // since we don't build them, but we still refer to them (see manifest.json).
-      new WebpackTouch({ filename: 'package/modules/chunk-vendors.js' }),
-      new WebpackTouch({ filename: 'package/modules/chunk-common.js' })
-    ]
+      })
+    ],
+    optimization: {
+      minimize: false,
+      splitChunks: false
+    }
   },
   // Leave CSS embedded in JS modules instead of
   // extracting it into dedicated .css files.
@@ -49,19 +49,25 @@ module.exports = {
       entry: 'src/options/main.js',
       template: 'src/options/options.html',
       filename: 'options.html',
-      chunks: ['chunk-vendors', 'chunk-common', 'options']
+      chunks: ['options']
     },
     expire: {
       entry: 'src/expire/main.js',
       template: 'src/expire/expire.html',
       filename: 'expire.html',
-      chunks: ['chunk-vendors', 'chunk-common', 'expire']
+      chunks: ['expire']
     },
     countdown: {
       entry: 'src/countdown/main.js',
       template: 'src/countdown/countdown.html',
       filename: 'countdown.html',
-      chunks: ['chunk-vendors', 'chunk-common', 'countdown']
+      chunks: ['countdown']
+    },
+    offscreen: {
+      entry: 'src/offscreen/main.js',
+      template: 'src/offscreen/offscreen.html',
+      filename: 'offscreen.html',
+      chunks: ['offscreen']
     },
     background: 'src/background/main.js'
   },

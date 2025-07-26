@@ -8,6 +8,7 @@ import { HistoryService, SoundsService, SettingsService, PomodoroService, Option
 import { BadgeObserver, TimerSoundObserver, ExpirationSoundObserver, NotificationObserver, HistoryObserver, CountdownObserver, MenuObserver } from './Observers';
 import { ServiceBroker } from '../Service';
 import * as Alarms from './Alarms';
+import { SingletonPage, PageHost } from './SingletonPage';
 
 async function run() {
   chrome.runtime.onUpdateAvailable.addListener(() => {
@@ -16,6 +17,14 @@ async function run() {
     // the extension to automatically reload on update since a Pomodoro might be running.
     // See https://developer.chrome.com/apps/runtime#event-onUpdateAvailable.
   });
+
+  // we need to make some connection to prevent service worker from going inactive
+  await chrome.offscreen.createDocument({
+    url: 'offscreen.html',
+    reasons: ['BLOBS'],
+    justification: 'keep service worker running',
+  }).catch(() => {});
+  self.onmessage = e => {};
 
   let settingsManager = new StorageManager(new SettingsSchema(), Chrome.storage.sync);
   let settings = await PersistentSettings.create(settingsManager);
@@ -35,7 +44,7 @@ async function run() {
   settingsManager.on('change', () => menu.apply());
 
   Alarms.install(timer, settingsManager);
-  chrome.browserAction.onClicked.addListener(() => {
+  chrome.action.onClicked.addListener(() => {
     if (timer.isRunning) {
       timer.pause();
     } else if (timer.isPaused) {

@@ -1,6 +1,7 @@
 # Workspaces
 .idea/
 *.code-workspace
+.vscode
 
 # Development files.
 *.zip

@@ -6,7 +6,7 @@
 div {
   display: contents;
 }
-/deep/ svg {
+>>> svg {
   fill: currentColor;
 }
 </style>
