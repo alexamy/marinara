@@ -308,6 +308,8 @@ class MenuObserver
     this.menu.apply();
   }
 
+  onPing() {}
+
   onExpire() {
     this.menu.apply();
   }
@@ -333,6 +335,10 @@ class TraceObserver
 
   onTick(...args) {
     console.log('tick', ...args);
+  }
+
+  onPing(...args) {
+    console.log('ping', ...args);
   }
 
   onExpire(...args) {

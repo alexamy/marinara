@@ -16,6 +16,7 @@ class Timer extends EventEmitter
     this.duration = duration;
     this.tick = tick;
 
+    this.pingInterval = null;
     this.tickInterval = null;
     this.expireTimeout = null;
 
@@ -28,6 +29,7 @@ class Timer extends EventEmitter
     observer.onStop && this.on('stop', (...args) => observer.onStop(...args));
     observer.onPause && this.on('pause', (...args) => observer.onPause(...args));
     observer.onResume && this.on('resume', (...args) => observer.onResume(...args));
+    observer.onPing && this.on('ping', (...args) => observer.onPing(...args));
     observer.onTick && this.on('tick', (...args) => observer.onTick(...args));
     observer.onExpire && this.on('expire', (...args) => observer.onExpire(...args));
   }
@@ -74,6 +76,7 @@ class Timer extends EventEmitter
 
     this.setExpireTimeout(this.duration);
     this.setTickInterval(this.tick);
+    this.setPingInterval();
 
     this.state = TimerState.Running;
     this.checkpointStartAt = Date.now();
@@ -86,6 +89,7 @@ class Timer extends EventEmitter
       return;
     }
 
+    clearInterval(this.pingInterval);
     clearInterval(this.tickInterval);
     clearTimeout(this.expireTimeout);
 
@@ -104,6 +108,7 @@ class Timer extends EventEmitter
       return;
     }
 
+    clearInterval(this.pingInterval);
     clearInterval(this.tickInterval);
     clearTimeout(this.expireTimeout);
 
@@ -122,6 +127,7 @@ class Timer extends EventEmitter
 
     this.setExpireTimeout(this.remaining);
     this.setTickInterval(this.tick);
+    this.setPingInterval();
 
     this.state = TimerState.Running;
     this.checkpointStartAt = Date.now();
@@ -136,9 +142,11 @@ class Timer extends EventEmitter
 
   setExpireTimeout(seconds) {
     this.expireTimeout = setTimeout(() => {
+      clearInterval(this.pingInterval);
       clearInterval(this.tickInterval);
       clearTimeout(this.expireTimeout);
 
+      this.pingInterval = null;
       this.tickInterval = null;
       this.expireTimeout = null;
       this.checkpointStartAt = Date.now();
@@ -154,6 +162,12 @@ class Timer extends EventEmitter
     this.tickInterval = setInterval(() => {
       this.emit('tick', this.status);
     }, seconds * 1000);
+  }
+
+  setPingInterval() {
+    this.pingInterval = setInterval(() => {
+      this.emit('ping', this.status);
+    }, 3 * 1000);
   }
 }
 
@@ -326,6 +340,7 @@ class PomodoroTimer extends EventEmitter
     observer.onPause && this.on('pause', (...args) => observer.onPause(...args));
     observer.onResume && this.on('resume', (...args) => observer.onResume(...args));
     observer.onTick && this.on('tick', (...args) => observer.onTick(...args));
+    observer.onPing && this.on('ping', (...args) => observer.onPing(...args));
     observer.onExpire && this.on('expire', (...args) => observer.onExpire(...args));
   }
 
@@ -347,6 +362,10 @@ class PomodoroTimer extends EventEmitter
 
   onTick(status) {
     this.emit('tick', { phase: this.phase, nextPhase: this.nextPhase, ...status });
+  }
+
+  onPing(status) {
+    this.emit('ping', { phase: this.phase, nextPhase: this.nextPhase, ...status });
   }
 
   onExpire(status) {

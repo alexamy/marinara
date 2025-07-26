@@ -138,6 +138,10 @@ class PomodoroService extends Service
     this.emit('tick', ...args);
   }
 
+  onPing(...args) {
+    this.emit('ping', ...args);
+  }
+
   onExpire(...args) {
     this.emit('expire', ...args);
   }
