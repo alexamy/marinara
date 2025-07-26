@@ -20,3 +20,13 @@ jobs:
 
       - name: Install repo
         run: npm i
+
+      - name: Build extension
+        run: npm run build
+
+      - name: Deploy with gh-pages
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          npx -y gh-pages -b build -d package -u "github-actions-bot <support+actions@github.com>"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
