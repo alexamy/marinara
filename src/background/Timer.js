@@ -89,7 +89,6 @@ class Timer extends EventEmitter
       return;
     }
 
-    clearInterval(this.pingInterval);
     clearInterval(this.tickInterval);
     clearTimeout(this.expireTimeout);
 
@@ -108,7 +107,6 @@ class Timer extends EventEmitter
       return;
     }
 
-    clearInterval(this.pingInterval);
     clearInterval(this.tickInterval);
     clearTimeout(this.expireTimeout);
 
@@ -142,7 +140,6 @@ class Timer extends EventEmitter
 
   setExpireTimeout(seconds) {
     this.expireTimeout = setTimeout(() => {
-      clearInterval(this.pingInterval);
       clearInterval(this.tickInterval);
       clearTimeout(this.expireTimeout);
 
