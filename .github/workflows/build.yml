@@ -19,7 +19,7 @@ jobs:
           node-version: '16'
 
       - name: Install repo
-        run: npm i
+        run: npm ci
 
       - name: Build extension
         run: npm run build
