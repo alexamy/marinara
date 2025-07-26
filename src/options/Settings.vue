@@ -294,6 +294,7 @@ export default {
       this.showSettingsSaved = true;
     },
     async playTimerSound() {
+      return; // TODO: implement when sound is ready
       this.timerSoundMutex.exclusive(async () => {
         this.timerSound = await createTimerSound(this.settings.focus.timerSound);
         await this.timerSound.start();
