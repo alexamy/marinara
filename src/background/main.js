@@ -18,6 +18,14 @@ async function run() {
     // See https://developer.chrome.com/apps/runtime#event-onUpdateAvailable.
   });
 
+  // we need to make some connection to prevent service worker from going inactive
+  await chrome.offscreen.createDocument({
+    url: 'offscreen.html',
+    reasons: ['BLOBS'],
+    justification: 'keep service worker running',
+  }).catch(() => {});
+  self.onmessage = e => {};
+
   let settingsManager = new StorageManager(new SettingsSchema(), Chrome.storage.sync);
   let settings = await PersistentSettings.create(settingsManager);
   let timer = new PomodoroTimer(settings);

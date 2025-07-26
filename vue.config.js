@@ -63,6 +63,12 @@ module.exports = {
       filename: 'countdown.html',
       chunks: ['countdown']
     },
+    offscreen: {
+      entry: 'src/offscreen/main.js',
+      template: 'src/offscreen/offscreen.html',
+      filename: 'offscreen.html',
+      chunks: ['offscreen']
+    },
     background: 'src/background/main.js'
   },
   chainWebpack: config => {
